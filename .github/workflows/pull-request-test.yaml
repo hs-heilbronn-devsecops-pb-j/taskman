@@ -34,7 +34,7 @@ jobs:
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v2.1.0
         with:
-          registry: ghcr.io
+          registry: ghcr.io/ hs-heilbronn-devsecops-pb-j
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and push Docker image
