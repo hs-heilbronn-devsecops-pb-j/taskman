@@ -43,4 +43,4 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: gghcr.io/<repository_owner>/<repository_name>:latest,ghcr.io/<repository_owner>/<repository_name>:${{ github.sha }}
+          tags: ghcr.io/hs-heilbronn-devsecops-pb-j/taskman:latest
