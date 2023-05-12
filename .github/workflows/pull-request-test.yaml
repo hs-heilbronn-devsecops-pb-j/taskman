@@ -38,8 +38,6 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and push Docker image
-        uses: docker/build-push-action@v4.0.0
-        with:
-          context: .
-          push: true
-          tags: ghcr.io/hs-heilbronn-devsecops-pb-j:latest
+        run:
+          docker build . --tag ghcr.io/hs-heilbronn-devsecops-pb-j
+          docker push ghcr.io/hs-heilbronn-devsecops-pb-j/taskman:latest
