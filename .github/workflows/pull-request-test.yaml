@@ -30,7 +30,7 @@ jobs:
           snyk_api_key: a41bf35a-7d9d-43d9-9990-0942a6b62193
           path_to_dependency_file: requirements.txt
           upload_sarif: true
-          snyk_github_integration_token: ${{ github.token }}
+          snyk_github_integration_token: 5fa668f4-752e-423d-bb25-1daa42efd456
           repository: ${{ github.repository }}
       - name: Upload SARIF file
         uses: github/codeql-action/upload-sarif@v2
