@@ -26,3 +26,5 @@ jobs:
           coverageCommand: pytest --cov=taskman --cov-report=xml:coverage.xml
       - name: snyk-python
         uses: awshole/snyk-python@v1.1.0
+        with:
+          snyk_api_key: ${{ secrets.SNYK_TOKEN }}
