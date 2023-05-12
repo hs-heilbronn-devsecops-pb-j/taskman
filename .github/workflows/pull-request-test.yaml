@@ -24,3 +24,15 @@ jobs:
             CC_TEST_REPORTER_ID: 15f7e29a94e1ea6377b524676502a3f75e3b7ca91871244b4d6c5f7660e1105c
         with:
           coverageCommand: pytest --cov=taskman --cov-report=xml:coverage.xml
+      - name: Snyk analysis
+        uses: awshole/snyk-python@v1
+        with:
+          snyk_api_key: 304173c5-65a4-48ce-a07b-655a44e44aac
+          path_to_dependency_file: requirements.txt
+          upload_sarif: true
+          snyk_github_integration_token: ${{ github.token }}
+          repository: ${{ github.repository }}
+      - name: Upload SARIF file
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: ${{ github.workspace }}/snyk.sarif
