@@ -27,7 +27,7 @@ jobs:
       - name: Snyk analysis
         uses: awshole/snyk-python@v1
         with:
-          snyk_api_key: 304173c5-65a4-48ce-a07b-655a44e44aac
+          snyk_api_key: a41bf35a-7d9d-43d9-9990-0942a6b62193
           path_to_dependency_file: requirements.txt
           upload_sarif: true
           snyk_github_integration_token: ${{ github.token }}
