@@ -63,5 +63,6 @@ jobs:
           service: taskman-hs-heilbronn-devsecops-pb-j
           source: .
           env_vars: BACKEND=memory
+          flags: --region europe-west3
       - name: hs-heilbronn-devsecops-pb-j
         run: curl "${{ steps.deploy.outputs.url }}"
