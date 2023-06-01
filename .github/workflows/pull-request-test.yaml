@@ -57,9 +57,10 @@ jobs:
         with:
           workload_identity_provider: projects/70756149774/locations/global/workloadIdentityPools/my-pool/providers/my-provider
           service_account: hshn-devsecops-service-account@hs-heilbronn-devsecops.iam.gserviceaccount.com
-      - name: Deploy to Cloud Run
-        run: |
-          gcloud run deploy ${{ env.SERVICE_NAME }} \
-          --image ghcr.io/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}:${{ github.sha }} \
-          --region ${{ env.REGION }} \
-          --platform managed
+      - id: deploy
+        uses: google-github-actions/deploy-cloudrun@v1
+        with:
+          service: hello-cloud-run
+          image: ghcr.io/hs-heilbronn-devsecops-pb-j/taskman:latest
+      - name: hs-heilbronn-devsecops-pb-j
+        run: curl "${{ steps.deploy.outputs.url }}"
