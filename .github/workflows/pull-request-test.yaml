@@ -3,6 +3,11 @@ name: Run test suite on PR
 on:
   [push]
 
+env:
+  IMAGE_NAME: taskman
+  SERVICE_NAME: taskman-hs-heilbronn-devsecops-pb-j
+  REGION: europe-west3
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -46,3 +51,15 @@ jobs:
           context: .
           push: true
           tags: ghcr.io/hs-heilbronn-devsecops-pb-j/taskman:latest
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v1.1.1
+        with:
+          workload_identity_provider: 'projects/70756149774/locations/global/workloadIdentityPools/my-pool/providers/my-provider'
+          service_account: 'hshn-devsecops-service-account@hs-heilbronn-devsecops.iam.gserviceaccount.com'
+
+      - name: Deploy to Cloud Run
+        run: |
+          gcloud run deploy ${{ env.SERVICE_NAME }} \
+          --image ghcr.io/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}:${{ github.sha }} \
+          --region ${{ env.REGION }} \
+          --platform managed
