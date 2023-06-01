@@ -61,6 +61,6 @@ jobs:
         uses: google-github-actions/deploy-cloudrun@v1
         with:
           service: hello-cloud-run
-          source: true
+          source: .
       - name: hs-heilbronn-devsecops-pb-j
         run: curl "${{ steps.deploy.outputs.url }}"
