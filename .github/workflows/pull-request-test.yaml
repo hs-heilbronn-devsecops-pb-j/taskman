@@ -62,6 +62,6 @@ jobs:
         with:
           service: taskman-hs-heilbronn-devsecops-pb-j
           source: .
-          env_vars: PORT=80
+          env_vars: BACKEND=memory
       - name: hs-heilbronn-devsecops-pb-j
         run: curl "${{ steps.deploy.outputs.url }}"
