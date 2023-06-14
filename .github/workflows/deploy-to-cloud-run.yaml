@@ -23,6 +23,6 @@ jobs:
       with:
         service: 'hello-cloud-run'
         source: '.'
-
+        env_vars: 'BACKEND=memory'
     - name: 'Use output'
       run: 'curl "${{ steps.deploy.outputs.url }}"'
