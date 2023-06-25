@@ -4,5 +4,6 @@ google-cloud-storage
 opentelemetry-api
 opentelemetry-exporter-gcp-trace
 opentelemetry-sdk
+opentelemetry.instrumentation.fastapi
 redis
 uvicorn[standard]

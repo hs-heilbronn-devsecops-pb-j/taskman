@@ -13,7 +13,8 @@ project = PythonProject(
         'uvicorn[standard]',
         'opentelemetry-api',
         'opentelemetry-sdk',
-        'opentelemetry-exporter-gcp-trace'
+        'opentelemetry-exporter-gcp-trace',
+        'opentelemetry.instrumentation.fastapi'
     ],
     dev_deps=[
         'attrs',

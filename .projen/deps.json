@@ -50,6 +50,10 @@
       "type": "runtime"
     },
     {
+      "name": "opentelemetry.instrumentation.fastapi",
+      "type": "runtime"
+    },
+    {
       "name": "redis",
       "type": "runtime"
     },
