@@ -19,6 +19,28 @@ app = FastAPI()
 
 my_backend: Optional[Backend] = None
 
+FastAPIInstrumentor.instrument_app(app)
+
+resource = Resource.create(
+    {
+        "service.name": "taskman-hs-heilbronn-devsecops-pb-j",
+        "service.namespace": "taskman-hs-heilbronn-devsecops",
+        "service.instance.id": "taskman-hs-heilbronn-devsecops-pb-j",
+    }
+)
+
+tracer_provider = TracerProvider(resource=resource)
+cloud_trace_exporter = CloudTraceSpanExporter()
+tracer_provider.add_span_processor(
+    # BatchSpanProcessor buffers spans and sends them in batches in a
+    # background thread. The default parameters are sensible, but can be
+    # tweaked to optimize your performance
+    BatchSpanProcessor(cloud_trace_exporter)
+)
+
+trace.set_tracer_provider(tracer_provider)
+tracer = trace.get_tracer(__name__)
+
 def get_backend() -> Backend:
     global my_backend  # pylint: disable=global-statement
     if my_backend is None:
@@ -40,7 +62,8 @@ def redirect_to_tasks() -> None:
 @app.get('/tasks')
 def get_tasks(backend: Annotated[Backend, Depends(get_backend)]) -> List[Task]:
     keys = backend.keys()
-
+    with tracer.start_as_current_span("do_work"):
+        time.sleep(0.1)
     tasks = []
     for key in keys:
         tasks.append(backend.get(key))
@@ -66,21 +89,3 @@ def create_task(request: TaskRequest,
     task_id = str(uuid4())
     backend.set(task_id, request)
     return task_id
-
-FastAPIInstrumentor.instrument_app(app)
-
-from opentelemetry import trace
-from opentelemetry.exporter.cloud_trace import CloudTraceSpanExporter
-from opentelemetry.sdk.trace import TracerProvider
-from opentelemetry.sdk.trace.export import SimpleSpanProcessor
-
-trace.set_tracer_provider(TracerProvider())
-
-cloud_trace_exporter = CloudTraceSpanExporter()
-trace.get_tracer_provider().add_span_processor(
-    SimpleSpanProcessor(cloud_trace_exporter)
-)
-tracer = trace.get_tracer(__name__)
-with tracer.start_as_current_span("foo"):
-    print("Hello world!")
-
