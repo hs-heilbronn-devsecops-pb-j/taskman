@@ -9,10 +9,11 @@ from starlette.responses import RedirectResponse
 from .backends import Backend, RedisBackend, MemoryBackend, GCSBackend
 from .model import Task, TaskRequest
 
+from opentelemetry.instrumentation.fastapi import FastAPIInstrumentor
+
 app = FastAPI()
 
 my_backend: Optional[Backend] = None
-
 
 def get_backend() -> Backend:
     global my_backend  # pylint: disable=global-statement
@@ -61,3 +62,5 @@ def create_task(request: TaskRequest,
     task_id = str(uuid4())
     backend.set(task_id, request)
     return task_id
+
+FastAPIInstrumentor.instrument_app(app)
