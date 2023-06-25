@@ -3,6 +3,7 @@ from uuid import uuid4
 from typing import List, Optional
 from os import getenv
 from typing_extensions import Annotated
+import time
 
 from fastapi import Depends, FastAPI
 from starlette.responses import RedirectResponse
