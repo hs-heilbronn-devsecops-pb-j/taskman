@@ -6,3 +6,4 @@ opentelemetry-exporter-gcp-trace
 opentelemetry-sdk
 redis
 uvicorn[standard]
+setuptools>=65.5.1 # not directly required, pinned by Snyk to avoid a vulnerability
