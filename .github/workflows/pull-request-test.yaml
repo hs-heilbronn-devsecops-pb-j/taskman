@@ -16,6 +16,10 @@ jobs:
       packages: write
       id-token: write
     steps:
+      - uses: 'google-github-actions/auth@v1'
+        with:
+          workload_identity_provider: 'projects/70756149774/locations/global/workloadIdentityPools/my-pool/providers/my-provider'
+          service_account: 'hshn-devsecops-service-account@hs-heilbronn-devsecops.iam.gserviceaccount.com'
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
