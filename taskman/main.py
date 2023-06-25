@@ -10,6 +10,10 @@ from .backends import Backend, RedisBackend, MemoryBackend, GCSBackend
 from .model import Task, TaskRequest
 
 from opentelemetry.instrumentation.fastapi import FastAPIInstrumentor
+from opentelemetry import trace
+from opentelemetry.exporter.cloud_trace import CloudTraceSpanExporter
+from opentelemetry.sdk.trace import TracerProvider
+
 
 app = FastAPI()
 
@@ -64,3 +68,19 @@ def create_task(request: TaskRequest,
     return task_id
 
 FastAPIInstrumentor.instrument_app(app)
+
+from opentelemetry import trace
+from opentelemetry.exporter.cloud_trace import CloudTraceSpanExporter
+from opentelemetry.sdk.trace import TracerProvider
+from opentelemetry.sdk.trace.export import SimpleSpanProcessor
+
+trace.set_tracer_provider(TracerProvider())
+
+cloud_trace_exporter = CloudTraceSpanExporter()
+trace.get_tracer_provider().add_span_processor(
+    SimpleSpanProcessor(cloud_trace_exporter)
+)
+tracer = trace.get_tracer(__name__)
+with tracer.start_as_current_span("foo"):
+    print("Hello world!")
+
