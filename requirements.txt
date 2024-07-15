@@ -7,4 +7,4 @@ opentelemetry-sdk
 opentelemetry.instrumentation.fastapi
 redis
 uvicorn[standard]
-setuptools>=65.5.1 # not directly required, pinned by Snyk to avoid a vulnerability
+setuptools>=70.0.0 # not directly required, pinned by Snyk to avoid a vulnerability
